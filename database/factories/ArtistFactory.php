@@ -17,11 +17,11 @@ class ArtistFactory extends Factory
     public function definition(): array
     {
         return [
-         
+
                 'artist_name' => fake()->firstName() .' '. fake()->lastname() ,
                 'address' => fake()->unique()->address(),
                 'date_started' => fake()->date() ,
-          
+
         ];
     }
 }

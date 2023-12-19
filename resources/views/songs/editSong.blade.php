@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Song</title>
+    <title>Edit Artist</title>
     <style>
         body {
             display: flex;
@@ -16,6 +16,7 @@
         }
 
         .container {
+            position: relative;
             width: 300px;
             padding: 20px;
             background-color: #fff;
@@ -41,7 +42,17 @@
             font-size: 14px;
         }
 
-        .container input[type="submit"], .container button {
+        .container input[type="submit"]{
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-right: 5px;
+        }
+        .cancel{
             background-color: #4caf50;
             color: white;
             cursor: pointer;
@@ -52,7 +63,7 @@
             margin-right: 5px;
         }
 
-        .container input[type="submit"]:hover, .container button:hover {
+        .container input[type="submit"]:hover{
             background-color: #45a049;
         }
 
@@ -63,16 +74,39 @@
 
         .container button[type="button"]:hover {
             background-color: #d28d8d;
-            
         }
+        .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+    font-size: 12px;
+    color: white;
+    background-color: #ff4d4d;
+    border: none;
+    text-align: center;
+    border-radius: 50%;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-btn:hover {
+    background-color: #a30606;
+}
     </style>
 </head>
 <body>
-<div class="container">
+    <div class="container">
+        <button class="close-btn" onclick="javascript:window.location='{{ route('song') }}';"> &times;</button>
+
 @if ($song)
 <h2>Edit Song</h2>
         <form action="{{ route('updateSong', ['id' => $song->id]) }}" method="post">
-        @csrf 
+        @csrf
         @method('PUT')
             <label for="title">Title:</label>
             <input type="text" id="title" value="{{$song->title}}" name="title">
@@ -96,12 +130,14 @@
                 <option value="{{$album->id}}"> {{$album->album_title}}</option>
                 @endforeach
             </select>
+            <input type="submit" class="submit" value="Update">
 
-            <input type="submit" value="Submit">
-            <a href="{{url('/songs')}}">
-            <button type="button">Cancel</button>
-            </a>
         </form>
+
+        <div class="footer">
+         <a href="{{ url('song/delete',$song->id) }}">
+            <button type="button" class="cancel" onclick="return confirm('Are you sure to delete this?');">Delete</button>
+        </a>
         @else
     <p>Course not found.</p>
 @endif

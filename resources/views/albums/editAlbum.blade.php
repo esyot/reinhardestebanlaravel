@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Album</title>
+    <title>Edit Artist</title>
     <style>
-            body {
+        body {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,6 +16,7 @@
         }
 
         .container {
+            position: relative;
             width: 300px;
             padding: 20px;
             background-color: #fff;
@@ -41,7 +42,17 @@
             font-size: 14px;
         }
 
-        .container input[type="submit"], .container button {
+        .container input[type="submit"]{
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-right: 5px;
+        }
+        .cancel{
             background-color: #4caf50;
             color: white;
             cursor: pointer;
@@ -52,7 +63,7 @@
             margin-right: 5px;
         }
 
-        .container input[type="submit"]:hover, .container button:hover {
+        .container input[type="submit"]:hover{
             background-color: #45a049;
         }
 
@@ -63,16 +74,38 @@
 
         .container button[type="button"]:hover {
             background-color: #d28d8d;
-            
         }
+        .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+    font-size: 12px;
+    color: white;
+    background-color: #ff4d4d;
+    border: none;
+    text-align: center;
+    border-radius: 50%;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-btn:hover {
+    background-color: #a30606;
+}
     </style>
 </head>
 <body>
-   <div class="container">
- 
+    <div class="container">
+        <button class="close-btn" onclick="javascript:window.location='{{ route('albums') }}';"> &times;</button>
+
    @if ($album)
     <form action="{{ route('updateAlbum', ['id' => $album->id]) }}" method="post">
-        @csrf 
+        @csrf
         @method('PUT')
         <h2>Edit Artist</h2>
 
@@ -90,12 +123,14 @@
             @endforeach
 
         </select>
+        <input type="submit" class="submit" value="Update">
 
-        <div class="footer">
-            <input type="submit" class="submit" value="Update">
-            <button type="button" class="cancel" onclick="javascript:window.location='{{ route('artists') }}';">Cancel</button>
-        </div>
     </form>
+
+    <div class="footer">
+     <a href="{{ url('album/delete',$album->id) }}">
+        <button type="button" class="cancel" onclick="return confirm('Are you sure to delete this?');">Delete</button>
+    </a>
 @else
     <p>Album not found.</p>
 @endif
