@@ -107,7 +107,7 @@
     <form action="{{ route('updateAlbum', ['id' => $album->id]) }}" method="post">
         @csrf
         @method('PUT')
-        <h2>Edit Artist</h2>
+        <h2>Edit Album</h2>
 
         <label for="album_title">Album Title:</label>
         <input type="text" id="album_title" name="album_title" value="{{ $album->album_title }}" required>

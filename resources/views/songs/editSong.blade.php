@@ -101,7 +101,7 @@
 </head>
 <body>
     <div class="container">
-        <button class="close-btn" onclick="javascript:window.location='{{ route('song') }}';"> &times;</button>
+        <button class="close-btn" onclick="javascript:window.location='{{ route('songs') }}';"> &times;</button>
 
 @if ($song)
 <h2>Edit Song</h2>
